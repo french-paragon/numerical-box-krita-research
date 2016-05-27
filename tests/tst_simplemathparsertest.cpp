@@ -13,6 +13,7 @@ public:
 private Q_SLOTS:
 	void testDoubleComputation();
 	void testIntComputation();
+	void testIntFlooring();
 };
 
 SimpleMathParserTest::SimpleMathParserTest()
@@ -105,6 +106,34 @@ void SimpleMathParserTest::testIntComputation()
 
 		QCOMPARE(result, expected[i]);
 	}
+}
+void SimpleMathParserTest::testIntFlooring(){
+
+	QStringList exprs = {"4.5",
+					  "-4.5",
+					  "3.5 + 4.5",
+					  "2.8 - -3.5",
+					  "4.5/2.9",
+					  "7.6*3.2",
+					  "7.6*3.2 + 4.5"
+						};
+
+	QVector<int> expected = {4,
+							 -4,
+							 3+4,
+							 2 - -3,
+							 4/2,
+							 7*3,
+							 7*3+4
+							};
+
+	for(int i = 0; i < expected.size(); i++){
+
+		int result = utils::parseIntegerMathExpr(exprs[i]);
+
+		QCOMPARE(result, expected[i]);
+	}
+
 }
 
 QTEST_APPLESS_MAIN(SimpleMathParserTest)

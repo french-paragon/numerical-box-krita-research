@@ -495,6 +495,9 @@ int treatFuncsInt(QString const& expr, bool & noProblem){
 
 	} else if(integerExpr.exactMatch(expr.trimmed())){
 		return QVariant(expr).toInt(&noProblem);
+	} else if(numberExpr.exactMatch(expr.trimmed())){
+		double value = qFloor( QVariant(expr).toDouble(&noProblem));
+		return (value > 0.0) ? value: value + 1;
 	}
 
 	noProblem = false;
