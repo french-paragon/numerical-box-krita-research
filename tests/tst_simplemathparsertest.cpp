@@ -60,12 +60,12 @@ void SimpleMathParserTest::testDoubleComputation()
 							 0.0 / 0.0 + 3*3,
 							 qPow(2,3) - 4 * 1.5,
 							 qPow(2,3.0) - 4 * 1.5,
-							 qCos(1)*2,
-							 -qCos(1)*2,
-							 qPow(qCos(1),3)*2,
-							 qPow(qCos(1),3.0)*2,
-							 qCos(1)*2 + qSin(3)/2,
-							 qCos(qAcos(-1)+1*qPow(3,2.0))*2 + qSin(3)/2};
+							 qCos(1.0/180*qAcos(-1))*2,
+							 -qCos(1.0/180*qAcos(-1))*2,
+							 qPow(qCos(1.0/180*qAcos(-1)),3)*2,
+							 qPow(qCos(1.0/180*qAcos(-1)),3.0)*2,
+							 qCos(1.0/180*qAcos(-1))*2 + qSin(3.0/180*qAcos(-1))/2,
+							 qCos((qAcos(-1.0)*180/qAcos(-1)+1*qPow(3,2.0))/180*qAcos(-1))*2 + qSin(3.0/180*qAcos(-1))/2};
 
 	for(int i = 0; i < expected.size(); i++){
 

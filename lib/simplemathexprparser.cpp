@@ -345,18 +345,19 @@ double treatFuncs(QString const& expr, bool & noProblem){
 			return 0.0;
 		}
 
+		//trigonometry is done in degree
 		if(func == "cos"){
-			val = qCos(val);
+			val = qCos(val/180*qAcos(-1));
 		} else if (func == "sin"){
-			val = qSin(val);
+			val = qSin(val/180*qAcos(-1));
 		} else if (func == "tan"){
-			val = qTan(val);
+			val = qTan(val/180*qAcos(-1));
 		} else if(func == "acos"){
-			val = qAcos(val);
+			val = qAcos(val)*180/qAcos(-1);
 		} else if (func == "asin"){
-			val = qAsin(val);
+			val = qAsin(val)*180/qAcos(-1);
 		} else if (func == "atan"){
-			val = qAtan(val);
+			val = qAtan(val)*180/qAcos(-1);
 		}else if (func == "exp"){
 			val = qExp(val);
 		}else if (func == "ln"){
