@@ -1,19 +1,19 @@
-#ifndef SPECIALSPINBOX_H
-#define SPECIALSPINBOX_H
+#ifndef SPECIALINTSPINBOX_H
+#define SPECIALINTSPINBOX_H
 
 #include "simpleexprparser_global.h"
 
-#include <QDoubleSpinBox>
+#include <QSpinBox>
 
-class SIMPLEEXPRPARSERSHARED_EXPORT SpecialSpinBox : public QDoubleSpinBox
+class SIMPLEEXPRPARSERSHARED_EXPORT SpecialIntSpinBox : public QSpinBox
 {
 	Q_OBJECT
 public:
-	explicit SpecialSpinBox(QWidget *parent = 0);
-	~SpecialSpinBox();
+	explicit SpecialIntSpinBox(QWidget *parent = 0);
+	~SpecialIntSpinBox();
 
-	virtual double valueFromText(const QString & text) const;
-	virtual QString textFromValue(double val) const;
+	virtual int valueFromText(const QString & text) const;
+	virtual QString textFromValue(int val) const;
 	virtual QValidator::State validate ( QString & input, int & pos ) const;
 
 	virtual void stepBy(int steps);
@@ -32,8 +32,8 @@ public slots:
 
 protected:
 
-	mutable QString _lastExprParsed;
+	mutable QString* _lastExprParsed;
 	mutable bool _isLastValid;
 };
 
-#endif // SPECIALSPINBOX_H
+#endif // SPECIALINTSPINBOX_H

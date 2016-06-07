@@ -4,9 +4,10 @@
 
 SpecialIntSpinBox::SpecialIntSpinBox(QWidget *parent) :
 	QSpinBox(parent),
-  _lastExprParsed("0"),
   _isLastValid(true)
 {
+	_lastExprParsed = new QString("0");
+
 	connect(this, SIGNAL(noMoreParsingError()),
 			this, SLOT(clearErrorStyle()));
 	connect(this, SIGNAL(errorWhileParsing(QString)),
@@ -17,13 +18,13 @@ SpecialIntSpinBox::SpecialIntSpinBox(QWidget *parent) :
 SpecialIntSpinBox::~SpecialIntSpinBox(){
 
 	//needed to avoid a segfault during destruction.
-	_isLastValid = true;
+	delete _lastExprParsed;
 
 }
 
 int SpecialIntSpinBox::valueFromText(const QString & text) const{
 
-	_lastExprParsed = text;
+	*_lastExprParsed = text;
 
 	bool ok;
 
@@ -48,8 +49,8 @@ int SpecialIntSpinBox::valueFromText(const QString & text) const{
 QString SpecialIntSpinBox::textFromValue(int val) const{
 
 	if(!_isLastValid){
-		emit errorWhileParsing(_lastExprParsed);
-		return _lastExprParsed;
+		emit errorWhileParsing(*_lastExprParsed);
+		return *_lastExprParsed;
 	}
 
 	return QSpinBox::textFromValue(val);

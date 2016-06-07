@@ -18,7 +18,11 @@ CONFIG += c++11
 DEFINES += SIMPLEEXPRPARSER_LIBRARY
 
 SOURCES += simplemathexprparser.cpp \
+        specialspinbox.cpp \
+        specialintspinbox.cpp
 
 HEADERS  += \
     simplemathexprparser.h \
     simpleexprparser_global.h \
+    specialspinbox.h \
+    specialintspinbox.h
