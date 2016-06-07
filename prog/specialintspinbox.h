@@ -27,6 +27,9 @@ signals:
 
 public slots:
 
+	void setErrorStyle();
+	void clearErrorStyle();
+
 protected:
 
 	mutable QString _lastExprParsed;

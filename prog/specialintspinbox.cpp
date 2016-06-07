@@ -7,6 +7,10 @@ SpecialIntSpinBox::SpecialIntSpinBox(QWidget *parent) :
   _lastExprParsed("0"),
   _isLastValid(true)
 {
+	connect(this, SIGNAL(noMoreParsingError()),
+			this, SLOT(clearErrorStyle()));
+	connect(this, SIGNAL(errorWhileParsing(QString)),
+			this, SLOT(setErrorStyle()));
 
 }
 
@@ -31,7 +35,7 @@ int SpecialIntSpinBox::valueFromText(const QString & text) const{
 
 	if(!ok){
 		_isLastValid = false;
-		emit errorWhileParsing(text);
+		//emit errorWhileParsing(text); //if uncommented become red everytime the string is wrong.
 	} else {
 		_isLastValid = true;
 		emit noMoreParsingError();
@@ -44,7 +48,8 @@ int SpecialIntSpinBox::valueFromText(const QString & text) const{
 QString SpecialIntSpinBox::textFromValue(int val) const{
 
 	if(!_isLastValid){
-		return QString(_lastExprParsed.toLatin1());
+		emit errorWhileParsing(_lastExprParsed);
+		return _lastExprParsed;
 	}
 
 	return QSpinBox::textFromValue(val);
@@ -60,8 +65,17 @@ QValidator::State SpecialIntSpinBox::validate ( QString & input, int & pos ) con
 void SpecialIntSpinBox::stepBy(int steps){
 
 	_isLastValid = true;
+	emit noMoreParsingError();
 
 	QSpinBox::stepBy(steps);
 
+}
+
+void SpecialIntSpinBox::setErrorStyle(){
+	setStyleSheet("Background: red; color: white;");
+}
+
+void SpecialIntSpinBox::clearErrorStyle(){
+	setStyleSheet("");
 }
 

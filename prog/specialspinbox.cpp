@@ -11,6 +11,10 @@ SpecialSpinBox::SpecialSpinBox(QWidget *parent) :
 	_lastExprParsed("0.0"),
 	_isLastValid(true)
 {
+	connect(this, SIGNAL(noMoreParsingError()),
+			this, SLOT(clearErrorStyle()));
+	connect(this, SIGNAL(errorWhileParsing(QString)),
+			this, SLOT(setErrorStyle()));
 
 }
 SpecialSpinBox::~SpecialSpinBox(){
@@ -30,12 +34,12 @@ double SpecialSpinBox::valueFromText(const QString & text) const{
 
 		if(!ok){
 			_isLastValid = false;
-			emit errorWhileParsing(text);
+			//emit errorWhileParsing(_lastExprParsed); //if uncommented become red everytime the string is wrong.
 			return ret;
 		} else {
 
 			_isLastValid = true;
-			emit errorWhileParsing(text);
+			emit noMoreParsingError();
 			return ret;
 		}
 
@@ -45,6 +49,7 @@ double SpecialSpinBox::valueFromText(const QString & text) const{
 QString SpecialSpinBox::textFromValue(double val) const{
 
 	if(!_isLastValid){
+		emit errorWhileParsing(_lastExprParsed);
 		return _lastExprParsed;
 	}
 
@@ -61,8 +66,21 @@ QValidator::State SpecialSpinBox::validate ( QString & input, int & pos ) const{
 void SpecialSpinBox::stepBy(int steps){
 
 	_isLastValid = true; //reset to valid state so we can use the up and down buttons.
+	emit noMoreParsingError();
 
 	QDoubleSpinBox::stepBy(steps);
 
+}
+
+void SpecialSpinBox::setErrorStyle(){
+	if(!_isLastValid){
+		setStyleSheet("Background: red; color: white;");
+	}
+}
+
+void SpecialSpinBox::clearErrorStyle(){
+	if(_isLastValid){
+		setStyleSheet("");
+	}
 }
 
