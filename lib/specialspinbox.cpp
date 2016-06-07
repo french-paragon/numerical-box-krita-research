@@ -48,7 +48,7 @@ QString SpecialSpinBox::textFromValue(double val) const{
 		return _lastExprParsed;
 	}
 
-	return QString("%1").arg(val);
+	return QDoubleSpinBox::textFromValue(val);
 
 }
 
