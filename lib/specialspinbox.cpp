@@ -58,3 +58,11 @@ QValidator::State SpecialSpinBox::validate ( QString & input, int & pos ) const{
 
 }
 
+void SpecialSpinBox::stepBy(int steps){
+
+	_isLastValid = true; //reset to valid state so we can use the up and down buttons.
+
+	QDoubleSpinBox::stepBy(steps);
+
+}
+

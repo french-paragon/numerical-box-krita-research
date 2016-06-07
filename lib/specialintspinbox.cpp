@@ -57,3 +57,11 @@ QValidator::State SpecialIntSpinBox::validate ( QString & input, int & pos ) con
 
 }
 
+void SpecialIntSpinBox::stepBy(int steps){
+
+	_isLastValid = true;
+
+	QSpinBox::stepBy(steps);
+
+}
+

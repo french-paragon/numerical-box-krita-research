@@ -16,6 +16,8 @@ public:
 	virtual QString textFromValue(int val) const;
 	virtual QValidator::State validate ( QString & input, int & pos ) const;
 
+	virtual void stepBy(int steps);
+
 signals:
 
 	//! \brief signal emmitted when the last parsed expression create an error.
