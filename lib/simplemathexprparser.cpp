@@ -324,11 +324,14 @@ double treatFuncs(QString const& expr, bool & noProblem){
 
 	noProblem = true;
 
-	if(funcExpr.exactMatch(expr.trimmed())){
+	QRegExp funcExp = funcExpr; //copy the expression in the current execution stack, to avoid errors for example when multiple thread call this function.
+	QRegExp numExp = numberExpr;
 
-		int sign = funcExpr.capturedTexts()[1].isEmpty() ? 1 : -1;
-		QString func = funcExpr.capturedTexts()[2].toLower();
-		QString subExpr = funcExpr.capturedTexts()[3];
+	if(funcExp.exactMatch(expr.trimmed())){
+
+		int sign = funcExp.capturedTexts()[1].isEmpty() ? 1 : -1;
+		QString func = funcExp.capturedTexts()[2].toLower();
+		QString subExpr = funcExp.capturedTexts()[3];
 
 		double val = treatLevel1(subExpr, noProblem);
 
@@ -369,7 +372,7 @@ double treatFuncs(QString const& expr, bool & noProblem){
 		}
 
 		return sign*val;
-	} else if(numberExpr.exactMatch(expr.trimmed())){
+	} else if(numExp.exactMatch(expr.trimmed())){
 		return expr.toDouble(&noProblem);
 	}
 
@@ -481,10 +484,14 @@ int treatFuncsInt(QString const& expr, bool & noProblem){
 
 	noProblem = true;
 
-	if(funcExprInteger.exactMatch(expr.trimmed())){
+	QRegExp funcExpInteger = funcExprInteger;
+	QRegExp integerExp = integerExpr;
+	QRegExp numberExp = numberExpr;
 
-		int sign = funcExprInteger.capturedTexts()[1].isEmpty() ? 1 : -1;
-		QString subExpr = funcExprInteger.capturedTexts()[2];
+	if(funcExpInteger.exactMatch(expr.trimmed())){
+
+		int sign = funcExpInteger.capturedTexts()[1].isEmpty() ? 1 : -1;
+		QString subExpr = funcExpInteger.capturedTexts()[2];
 
 		int val = treatLevel1Int(subExpr, noProblem);
 
@@ -494,9 +501,9 @@ int treatFuncsInt(QString const& expr, bool & noProblem){
 
 		return sign*val;
 
-	} else if(integerExpr.exactMatch(expr.trimmed())){
+	} else if(integerExp.exactMatch(expr.trimmed())){
 		return QVariant(expr).toInt(&noProblem);
-	} else if(numberExpr.exactMatch(expr.trimmed())){
+	} else if(numberExp.exactMatch(expr.trimmed())){
 		double value = qFloor( QVariant(expr).toDouble(&noProblem));
 		return (value > 0.0) ? value: value + 1;
 	}
