@@ -11,16 +11,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = simpleExprParser
 TEMPLATE = lib
+CONFIG += staticlib
 
 CONFIG += c++11
 
 DEFINES += SIMPLEEXPRPARSER_LIBRARY
 
-SOURCES += specialspinbox.cpp \
-    simplemathexprparser.cpp \
-    specialintspinbox.cpp
+SOURCES += simplemathexprparser.cpp \
 
-HEADERS  += specialspinbox.h \
+HEADERS  += \
     simplemathexprparser.h \
-    specialintspinbox.h \
-    simpleexprparser_global.h
+    simpleexprparser_global.h \

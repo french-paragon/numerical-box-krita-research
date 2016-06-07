@@ -8,8 +8,12 @@ int main(int argc, char *argv[])
 	std::cout << "getValueFromText" << std::endl;
 
 	QApplication a(argc, argv);
-	MainWindow w;
-	w.show();
+	MainWindow* w = new MainWindow();
+	w->show();
 
-	return a.exec();
+	int code = a.exec();
+
+	delete w;
+
+	return code;
 }

@@ -19,7 +19,12 @@ LIBS += -L../lib -lsimpleExprParser
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+        specialspinbox.cpp \
+        specialintspinbox.cpp
+
 
 HEADERS  += mainwindow.h \
+    specialintspinbox.h \
+    specialspinbox.h
 
 FORMS    += mainwindow.ui

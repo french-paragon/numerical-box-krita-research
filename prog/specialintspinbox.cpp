@@ -44,7 +44,7 @@ int SpecialIntSpinBox::valueFromText(const QString & text) const{
 QString SpecialIntSpinBox::textFromValue(int val) const{
 
 	if(!_isLastValid){
-		return _lastExprParsed;
+		return QString(_lastExprParsed.toLatin1());
 	}
 
 	return QSpinBox::textFromValue(val);
